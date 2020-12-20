@@ -19,15 +19,15 @@ public class PathUtils {
      * @throws IllegalStateException if platform is unsupported (not Windows, Mac or Linux)
      */
     public File getProfilesINIPath() throws IllegalStateException {
-        Path pathPrefix = null;
+        Path pathPrefix;
         String os = System.getProperty("os.name");
 
         if (os.toLowerCase().contains("windows")) {
             pathPrefix = Paths.get(System.getenv("APPDATA"));
         } else if (os.toLowerCase().contains("linux")) {
-            pathPrefix = Paths.get(System.getenv("XDG_DATA_DIR"));
+            throw new UnsupportedOperationException("Linux not yet tested.");
         } else if (os.toLowerCase().contains("mac")) {
-            pathPrefix = Paths.get(System.getenv("HOME"), "Library");
+            throw new UnsupportedOperationException("macOS not yet tested.");
         } else {
             throw new IllegalStateException("No supported OS.");
         }
