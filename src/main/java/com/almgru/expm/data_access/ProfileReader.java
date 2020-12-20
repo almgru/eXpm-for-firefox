@@ -8,8 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.TreeSet;
 
 /**
  * Is responsible for loading and parsing profiles from the INI file into <code>Profile</code>
@@ -38,8 +37,8 @@ public class ProfileReader {
      *                               accessed or an unspecified IO error occurs, or when a problem
      *                               is encountered while parsing the INI file
      */
-    public Collection<Profile> loadProfiles(File profilesConfigFile) throws LoadProfilesException {
-        Collection<Profile> profiles = new ArrayList<>();
+    public TreeSet<Profile> loadProfiles(File profilesConfigFile) throws LoadProfilesException {
+        TreeSet<Profile> profiles = new TreeSet<>();
 
         try (FileReader fr = new FileReader(profilesConfigFile)) {
             for (INIUtils.INISection section : iniUtils.readSections(fr)) {

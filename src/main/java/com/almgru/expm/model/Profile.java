@@ -5,7 +5,7 @@ package com.almgru.expm.model;
  * <p>
  * Stores the profile's sequence number, name and path.
  */
-public class Profile {
+public class Profile implements Comparable<Profile> {
     public final int sequence;
     public final String name;
     public final boolean isRelative;
@@ -35,11 +35,14 @@ public class Profile {
     @Override
     public String toString() {
         return String.format(
-                "{ sequence: %d, name: %s, isRelative: %s, path: %s }",
-                this.sequence,
-                this.name,
-                this.isRelative,
-                this.path
+                "Profile #%d: %s",
+                this.sequence + 1,
+                this.name
         );
+    }
+
+    @Override
+    public int compareTo(Profile o) {
+        return Integer.compare(this.sequence, o.sequence);
     }
 }
