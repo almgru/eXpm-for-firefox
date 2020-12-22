@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertTrue;
@@ -20,8 +19,7 @@ public class MainWindowTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
-        URL url = MainWindowTest.class.getResource("/fxml/MainWindow.fxml");
-        FXMLLoader loader = new FXMLLoader(url);
+        FXMLLoader loader = new FXMLLoader(MainWindowTest.class.getResource("/fxml/MainWindow.fxml"));
         scene = new Scene(loader.load());
         stage.setScene(scene);
         mainWindow = loader.getController();
