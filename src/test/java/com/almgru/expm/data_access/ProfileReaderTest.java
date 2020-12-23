@@ -45,8 +45,10 @@ public class ProfileReaderTest {
             throws LoadProfilesException, IOException {
         this.mock_INIUtils_readSections_to_throwException(new IOException());
         profileReader.loadProfiles(new File(
-                "src/test/resources/ProfileReaderTest/exists_and_is_readable.ini"
-        ));
+                ProfileReaderTest.class.getResource(
+                        "/ProfileReaderTest/exists-and-is-readable.ini"
+                ).getPath())
+        );
     }
 
     @Test(expected = LoadProfilesException.class)
@@ -60,8 +62,10 @@ public class ProfileReaderTest {
         profileReader = new ProfileReader(mockUtils);
 
         profileReader.loadProfiles(new File(
-                "src/test/resources/ProfileReaderTest/exists_and_is_readable.ini"
-        ));
+                ProfileReaderTest.class.getResource(
+                        "/ProfileReaderTest/exists-and-is-readable.ini"
+                ).getPath())
+        );
     }
 
     @Test
@@ -79,9 +83,11 @@ public class ProfileReaderTest {
         when(mockUtils.parseBoolean(any())).thenReturn(true);
         this.profileReader = new ProfileReader(mockUtils);
 
-        Profile actual = this.profileReader.loadProfiles(new File(
-                "src/test/resources/ProfileReaderTest/exists_and_is_readable.ini"
-        )).iterator().next();
+        Profile actual = profileReader.loadProfiles(new File(
+                ProfileReaderTest.class.getResource(
+                        "/ProfileReaderTest/exists-and-is-readable.ini"
+                ).getPath())
+        ).iterator().next();
 
         assertEquals(expectedProfile, actual);
     }
