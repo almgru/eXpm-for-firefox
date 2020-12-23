@@ -19,7 +19,9 @@ public class MainWindowTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(MainWindowTest.class.getResource("/fxml/MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(MainWindowTest.class.getResource(
+                "/fxml/MainWindow.fxml"
+        ));
         scene = new Scene(loader.load());
         stage.setScene(scene);
         mainWindow = loader.getController();
