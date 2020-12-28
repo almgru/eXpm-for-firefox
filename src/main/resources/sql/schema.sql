@@ -1,0 +1,28 @@
+DROP TABLE IF EXISTS TemplateOf;
+
+DROP TABLE IF EXISTS Profiles;
+DROP TABLE IF EXISTS Templates;
+
+CREATE TABLE Profiles(
+    id INTEGER PRIMARY KEY
+);
+
+CREATE TABLE Templates(
+    id INTEGER PRIMARY KEY
+);
+
+CREATE TABLE TemplateOf(
+    id INTEGER PRIMARY KEY,
+    profile_id INTEGER NOT NULL,
+    template_id INTEGER NOT NULL,
+
+    FOREIGN KEY(profile_id)
+    REFERENCES Profiles(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+
+    FOREIGN KEY(template_id)
+    REFERENCES Templates(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);

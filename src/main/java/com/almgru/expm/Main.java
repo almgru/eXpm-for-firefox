@@ -1,7 +1,9 @@
 package com.almgru.expm;
 
+import com.almgru.expm.data_access.DatabaseAccess;
 import com.almgru.expm.data_access.PathUtils;
 import com.almgru.expm.data_access.ProfileReader;
+import com.almgru.expm.exceptions.DatabaseInitializationException;
 import com.almgru.expm.exceptions.LoadProfilesException;
 import com.almgru.expm.model.Profile;
 import com.almgru.expm.view.MainWindow;
@@ -19,6 +21,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         MainWindow mainWindow;
         Collection<Profile> profiles = null;
+
+        try {
+            new DatabaseAccess().initializeDatabase(
+                    "jdbc:sqlite:test.db",
+                    getClass().getResource("/sql/schema.sql")
+            );
+        } catch (DatabaseInitializationException ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
 
         try {
             ProfileReader profileReader = new ProfileReader();
