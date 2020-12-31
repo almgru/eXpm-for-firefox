@@ -13,7 +13,7 @@ public class DatabaseAccess {
     public void initializeDatabase(String connURL, URL dbSchema)
             throws DatabaseInitializationException {
         try (Connection conn = DriverManager.getConnection(connURL)) {
-            new SQLFileReader(conn, dbSchema).execute();
+            new SQLFileReader().executeScript(conn, dbSchema);
         } catch (URISyntaxException ex) {
             throw new DatabaseInitializationException(String.format(
                     "Could not initialize database: \"%s\" is not a valid URI.",
