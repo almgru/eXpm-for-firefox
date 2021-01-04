@@ -9,6 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>windows-registry-util</artifactId>
+            <version>0.3</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13</version>

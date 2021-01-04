@@ -1,5 +1,9 @@
 package com.almgru.expm.data_access;
 
+import com.github.sarxos.winreg.HKey;
+import com.github.sarxos.winreg.RegistryException;
+import com.github.sarxos.winreg.WindowsRegistry;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,5 +39,20 @@ public class PathUtils {
         return Paths.get(
                 pathPrefix.toString(), "Mozilla", "Firefox", "profiles.ini"
         ).toFile();
+    }
+
+    public File getFirefoxInstallPath() throws IllegalStateException, RegistryException {
+        String os = System.getProperty("os.name");
+
+        if (os.toLowerCase().contains("windows")) {
+            WindowsRegistry registry = WindowsRegistry.getInstance();
+
+            // TODO: Determine latest version number and use that instead of "84.0.1 (x64 sv-SE)"
+            String branch = "SOFTWARE\\Mozilla\\Mozilla Firefox\\84.0.1 (x64 sv-SE)\\Main";
+
+            return new File(registry.readString(HKey.HKLM, branch, "PathToExe"));
+        }
+
+        throw new UnsupportedOperationException("Linux and macOS not yet tested.");
     }
 }
