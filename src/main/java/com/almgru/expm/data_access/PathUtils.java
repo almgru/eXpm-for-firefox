@@ -9,6 +9,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Utility class for getting OS dependent paths.
@@ -84,10 +85,15 @@ public class PathUtils {
                 } else if (allVersions.size() == 1) {
                     return allVersions.get(0);
                 } else {
-                    // TODO: Sort versions by version number and return the latest
-                    throw new UnsupportedOperationException(
-                            "Handling of multiple installed Firefox versions not yet implemented."
-                    );
+                    TreeMap<Integer, String> orderedVersions = new TreeMap<>();
+
+                    for (String version : allVersions) {
+                        orderedVersions.put(Integer.parseInt(
+                                version.split(" ")[0].replaceAll("\\.", "")
+                        ), version);
+                    }
+
+                    return orderedVersions.get(orderedVersions.firstKey());
                 }
             } catch (RegistryException ex) {
                 throw new FirefoxNotInstalledException();
