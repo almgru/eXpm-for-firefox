@@ -1,9 +1,9 @@
 package com.almgru.expm;
 
-import com.almgru.expm.data_access.PathUtils;
 import com.almgru.expm.data_access.ProfileReader;
 import com.almgru.expm.exceptions.LoadProfilesException;
 import com.almgru.expm.model.Profile;
+import com.almgru.expm.system.PathUtils;
 import com.almgru.expm.view.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

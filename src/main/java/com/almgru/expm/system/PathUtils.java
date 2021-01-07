@@ -1,4 +1,4 @@
-package com.almgru.expm.data_access;
+package com.almgru.expm.system;
 
 import com.almgru.expm.exceptions.FirefoxNotInstalledException;
 import com.github.sarxos.winreg.HKey;
