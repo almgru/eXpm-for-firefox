@@ -30,6 +30,10 @@ public class PathUtils {
      * @throws IllegalStateException if platform is unsupported (not Windows, Mac or Linux)
      */
     public File getProfilesINIPath() throws IllegalStateException {
+        return Paths.get(this.getProfilesPath().getPath(), "profiles.ini").toFile();
+    }
+
+    public File getProfilesPath() throws IllegalStateException {
         Path pathPrefix;
         String os = System.getProperty("os.name");
 
@@ -44,9 +48,7 @@ public class PathUtils {
             throw new IllegalStateException("No supported OS.");
         }
 
-        return Paths.get(
-                pathPrefix.toString(), "Mozilla", "Firefox", "profiles.ini"
-        ).toFile();
+        return Paths.get(pathPrefix.toString(), "Mozilla", "Firefox").toFile();
     }
 
     public File getFirefoxInstallPath() throws IllegalStateException, FirefoxNotInstalledException {
