@@ -1,5 +1,6 @@
 package com.almgru.expm;
 
+import com.almgru.expm.controller.MainWindowController;
 import com.almgru.expm.data_access.ProfileReader;
 import com.almgru.expm.exceptions.LoadProfilesException;
 import com.almgru.expm.model.Profile;
@@ -34,6 +35,7 @@ public class Main extends Application {
             primaryStage.setScene(new Scene(loader.load()));
             mainWindow = loader.getController();
             mainWindow.setProfiles(profiles);
+            mainWindow.setMainWindowObserver(new MainWindowController());
         } catch (IOException exception) {
             exception.printStackTrace();
             System.exit(1);
