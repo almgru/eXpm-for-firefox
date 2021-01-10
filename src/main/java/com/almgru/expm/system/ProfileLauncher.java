@@ -7,13 +7,21 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class ProfileLauncher {
-    public void launchProfile(File firefoxPath, File profilesPath, Profile profile)
+    private final File firefoxInstallPath;
+    private final File profilesPath;
+
+    public ProfileLauncher(File firefoxInstallPath, File profilesPath) {
+        this.firefoxInstallPath = firefoxInstallPath;
+        this.profilesPath = profilesPath;
+    }
+
+    public void launchProfile(Profile profile)
             throws IOException {
         // TODO: Handle non-relative profiles
         Runtime.getRuntime().exec(new String[]{
-                firefoxPath.getPath(),
+                this.firefoxInstallPath.getPath(),
                 "-profile",
-                Paths.get(profilesPath.getPath(), profile.path).toString()
+                Paths.get(this.profilesPath.getPath(), profile.path).toString()
         });
     }
 }
