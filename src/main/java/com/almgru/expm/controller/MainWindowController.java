@@ -6,6 +6,11 @@ import com.almgru.expm.system.ProfileLauncher;
 
 import java.io.IOException;
 
+/**
+ * Controller for the main window.
+ * <p>
+ * Responsible for responding to user input events.
+ */
 public class MainWindowController implements MainWindowObserver {
     private final ProfileLauncher profileLauncher;
 
@@ -19,7 +24,6 @@ public class MainWindowController implements MainWindowObserver {
             this.profileLauncher.launchProfile(profile);
         } catch (IOException ex) {
             ex.printStackTrace();
-            System.exit(1);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.almgru.expm.controller.MainWindowController;
 import com.almgru.expm.data_access.ProfileReader;
 import com.almgru.expm.exceptions.FirefoxNotInstalledException;
 import com.almgru.expm.exceptions.LoadProfilesException;
+import com.almgru.expm.exceptions.UnsupportedOSException;
 import com.almgru.expm.model.Profile;
 import com.almgru.expm.system.PathUtils;
 import com.almgru.expm.system.ProfileLauncher;
@@ -26,7 +27,10 @@ public class Main extends Application {
             Collection<Profile> profiles = this.loadProfiles(pathUtils);
             ProfileLauncher profileLauncher = this.initProfileLauncher(pathUtils);
             this.initMainWindow(primaryStage, profiles, profileLauncher);
-        } catch (LoadProfilesException | IOException | FirefoxNotInstalledException ex) {
+        } catch (LoadProfilesException
+                | IOException
+                | FirefoxNotInstalledException
+                | UnsupportedOSException ex) {
             ex.printStackTrace();
             System.exit(1);
         }
@@ -40,8 +44,12 @@ public class Main extends Application {
      * @param pathUtils used to get the path to the profiles.ini file
      *
      * @return The loaded profiles
+     *
+     * @throws LoadProfilesException  if an IO error occurs when loading profiles INI
+     * @throws UnsupportedOSException if OS is not Windows, macOS or Linux
      */
-    private Collection<Profile> loadProfiles(PathUtils pathUtils) throws LoadProfilesException {
+    private Collection<Profile> loadProfiles(PathUtils pathUtils) throws
+            UnsupportedOSException, LoadProfilesException {
         return new ProfileReader().loadProfiles(pathUtils.getProfilesINIPath());
     }
 
@@ -54,9 +62,11 @@ public class Main extends Application {
      *
      * @return An initialized profile launcher
      *
+     * @throws UnsupportedOSException       if OS is not Windows, macOS or Linux
      * @throws FirefoxNotInstalledException if the install path of Firefox cannot be detected
      */
-    private ProfileLauncher initProfileLauncher(PathUtils pathUtils) throws FirefoxNotInstalledException {
+    private ProfileLauncher initProfileLauncher(PathUtils pathUtils) throws
+            UnsupportedOSException, FirefoxNotInstalledException {
         return new ProfileLauncher(pathUtils.getFirefoxInstallPath(), pathUtils.getProfilesPath());
     }
 
