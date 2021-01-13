@@ -2,6 +2,12 @@ package com.almgru.expm.view;
 
 import com.almgru.expm.model.Profile;
 
+/**
+ * Temporary wrapper to allow both Templates and Profiles to be stored in a
+ * TreeItem.
+ * <p>
+ * TODO: Revisit this when Template class is added.
+ */
 public class ProfileTreeItem {
     public final Profile profile;
     private final String description;
