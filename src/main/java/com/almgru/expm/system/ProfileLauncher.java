@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+/**
+ * Responsible for launching Firefox with a specified profile applied.
+ */
 public class ProfileLauncher {
     private final File firefoxInstallPath;
     private final File profilesPath;
@@ -15,13 +18,20 @@ public class ProfileLauncher {
         this.profilesPath = profilesPath;
     }
 
-    public void launchProfile(Profile profile)
-            throws IOException {
-        // TODO: Handle non-relative profiles
-        Runtime.getRuntime().exec(new String[]{
-                this.firefoxInstallPath.getPath(),
-                "-profile",
-                Paths.get(this.profilesPath.getPath(), profile.path).toString()
-        });
+    /**
+     * Launches Firefox with 'profile' applied.
+     *
+     * @param profile Profile to apply
+     */
+    public void launchProfile(Profile profile) {
+        try {
+            // TODO: Handle non-relative profiles
+            Runtime.getRuntime().exec(new String[]{
+                    this.firefoxInstallPath.getPath(),
+                    "-profile",
+                    Paths.get(this.profilesPath.getPath(), profile.path).toString()
+            });
+        } catch (IOException ignored) {
+        }
     }
 }
