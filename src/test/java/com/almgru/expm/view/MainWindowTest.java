@@ -44,4 +44,28 @@ public class MainWindowTest extends ApplicationTest {
         assertTrue(treeView.isVisible());
         assertTrue(treeView.getRoot().isExpanded());
     }
+
+    /*
+     * Test case
+     *
+     * MainWindow should notify observer when user double-clicks on profile
+     * in tree view.
+     *
+     * Variants:
+     * - Should _not_ notify observer when user clicks once
+     */
+
+    /*
+     * Test case
+     *
+     * MainWindow should provide observer with the correct Profile when user
+     * double-clicks on a profile in the tree view.
+     */
+
+    /*
+     * Test case
+     *
+     * MainWindow should not notify observer when user double-clicks on
+     * template.
+     */
 }
