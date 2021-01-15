@@ -1,11 +1,13 @@
 package com.almgru.expm.view;
 
 import com.almgru.expm.model.Profile;
+import com.almgru.expm.observers.MainWindowObserver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.io.IOException;
@@ -54,6 +56,21 @@ public class MainWindowTest extends ApplicationTest {
      * Variants:
      * - Should _not_ notify observer when user clicks once
      */
+    @Test
+    public void doubleClickOnProfile_should_notifyObserver() {
+        MainWindowObserver observer = Mockito.mock(MainWindowObserver.class);
+        mainWindow.setProfiles(Arrays.asList(
+                new Profile(1, "Private", true, "/test/path/1"),
+                new Profile(2, "Banking", true, "/test/path/2"),
+                new Profile(3, "Shopping", true, "/test/path/3")
+        ));
+
+        // TODO: Figure out how to do this.
+        doubleClickOn("Profile #1: Private");
+
+        Mockito.verify(observer)
+                .onProfileDoubleClicked(Mockito.any(Profile.class));
+    }
 
     /*
      * Test case
