@@ -5,6 +5,8 @@ import com.almgru.expm.observers.MainWindowObserver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -64,9 +66,19 @@ public class MainWindowTest extends ApplicationTest {
                 new Profile(2, "Banking", true, "/test/path/2"),
                 new Profile(3, "Shopping", true, "/test/path/3")
         ));
+        mainWindow.setMainWindowObserver(observer);
 
-        // TODO: Figure out how to do this.
-        doubleClickOn("Profile #1: Private");
+        // noinspection rawtypes: Type inside treeview not important
+        TreeView treeView = (TreeView) scene.lookup("#profilesTree");
+        treeView.getSelectionModel().select(1);
+        mainWindow.onProfileClicked(new MouseEvent(MouseEvent.MOUSE_PRESSED,
+                        0, 0, 0, 0, MouseButton.PRIMARY, 2,
+                        false, false, false, false,
+                        true, false,
+                        false, false, false,
+                        true, null
+                )
+        );
 
         Mockito.verify(observer)
                 .onProfileDoubleClicked(Mockito.any(Profile.class));
