@@ -1,15 +1,11 @@
 package com.almgru.expm.view;
 
 import com.almgru.expm.model.Profile;
-import com.almgru.expm.observers.MainWindowObserver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
 import java.io.IOException;
@@ -58,31 +54,6 @@ public class MainWindowTest extends ApplicationTest {
      * Variants:
      * - Should _not_ notify observer when user clicks once
      */
-    @Test
-    public void doubleClickOnProfile_should_notifyObserver() {
-        MainWindowObserver observer = Mockito.mock(MainWindowObserver.class);
-        mainWindow.setProfiles(Arrays.asList(
-                new Profile(1, "Private", true, "/test/path/1"),
-                new Profile(2, "Banking", true, "/test/path/2"),
-                new Profile(3, "Shopping", true, "/test/path/3")
-        ));
-        mainWindow.setMainWindowObserver(observer);
-
-        // noinspection rawtypes: Type inside treeview not important
-        TreeView treeView = (TreeView) scene.lookup("#profilesTree");
-        treeView.getSelectionModel().select(1);
-        mainWindow.onProfileClicked(new MouseEvent(MouseEvent.MOUSE_PRESSED,
-                        0, 0, 0, 0, MouseButton.PRIMARY, 2,
-                        false, false, false, false,
-                        true, false,
-                        false, false, false,
-                        true, null
-                )
-        );
-
-        Mockito.verify(observer)
-                .onProfileDoubleClicked(Mockito.any(Profile.class));
-    }
 
     /*
      * Test case
