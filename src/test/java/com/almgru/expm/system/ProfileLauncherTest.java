@@ -4,7 +4,7 @@ public class ProfileLauncherTest {
     /*
      * Test case
      *
-     * launchProfile should pass path of profile to executer when profile is
+     * launchProfile should pass path of profile to executor when profile is
      * absolute.
      */
 
