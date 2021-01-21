@@ -15,14 +15,20 @@ import java.util.TreeMap;
  * Utility class for getting OS dependent paths.
  */
 public class PathUtils {
+    private final OSDetector osDetector;
+
+    public PathUtils(OSDetector osDetector) {
+        this.osDetector = osDetector;
+    }
 
     /**
-     * Retrieves file pointing to the location of Firefox profiles INI file for different
-     * platforms.
+     * Retrieves file pointing to the location of Firefox profiles INI file for
+     * different platforms.
      *
      * @return File pointing to Firefox profiles INI file
      *
-     * @throws UnsupportedOSException if platform is unsupported (not Windows, Mac or Linux)
+     * @throws UnsupportedOSException if platform is unsupported (not Windows,
+     *                                Mac or Linux)
      */
     public File getProfilesINIPath() throws UnsupportedOSException {
         return Paths.get(this.getProfilesPath().getPath(), "profiles.ini").toFile();
@@ -37,14 +43,15 @@ public class PathUtils {
      * @throws UnsupportedOSException if OS is not Windows, macOs or Linux
      */
     public File getProfilesPath() throws UnsupportedOSException {
-        switch (this.getOS()) {
+        switch (this.osDetector.getOS()) {
             case Windows:
                 return Paths.get(
                         System.getenv("APPDATA"), "Mozilla", "Firefox"
                 ).toFile();
 
             case macOS:
-                throw new UnsupportedOperationException("macOS not yet tested.");
+                throw new UnsupportedOperationException("macOS not yet tested" +
+                        ".");
             case Linux:
                 throw new UnsupportedOperationException("Linux not yet tested.");
             case Unsupported:
@@ -52,22 +59,8 @@ public class PathUtils {
 
             default:
                 throw new IllegalStateException(String.format(
-                        "this.getOS() returned invalid value '%s'.", this.getOS()
+                        "this.getOS() returned invalid value '%s'.", this.osDetector.getOS()
                 ));
-        }
-    }
-
-    private OS getOS() {
-        String osString = System.getProperty("os.name").toLowerCase();
-
-        if (osString.contains("windows")) {
-            return OS.Windows;
-        } else if (osString.contains("mac")) {
-            return OS.macOS;
-        } else if (osString.contains("linux")) {
-            return OS.Linux;
-        } else {
-            return OS.Unsupported;
         }
     }
 
@@ -77,10 +70,9 @@ public class PathUtils {
      * @throws UnsupportedOSException       if OS is not Windows, macOS or Linux
      * @throws FirefoxNotInstalledException if the install path of Firefox cannot be found
      */
-    public File getFirefoxInstallPath() throws UnsupportedOSException, FirefoxNotInstalledException {
-        String os = System.getProperty("os.name");
-
-        switch (this.getOS()) {
+    public File getFirefoxInstallPath() throws UnsupportedOSException,
+            FirefoxNotInstalledException {
+        switch (this.osDetector.getOS()) {
             case Windows: {
                 try {
                     return new File(WindowsRegistry.getInstance().readString(
@@ -106,7 +98,7 @@ public class PathUtils {
 
             default:
                 throw new IllegalStateException(String.format(
-                        "this.getOS() returned invalid value '%s'.", this.getOS()
+                        "this.getOS() returned invalid value '%s'.", this.osDetector.getOS()
                 ));
         }
     }
@@ -136,12 +128,5 @@ public class PathUtils {
         } catch (RegistryException ex) {
             throw new FirefoxNotInstalledException();
         }
-    }
-
-    private enum OS {
-        Windows,
-        macOS,
-        Linux,
-        Unsupported
     }
 }

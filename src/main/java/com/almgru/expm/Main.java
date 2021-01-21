@@ -6,6 +6,7 @@ import com.almgru.expm.exceptions.FirefoxNotInstalledException;
 import com.almgru.expm.exceptions.LoadProfilesException;
 import com.almgru.expm.exceptions.UnsupportedOSException;
 import com.almgru.expm.model.Profile;
+import com.almgru.expm.system.OSDetector;
 import com.almgru.expm.system.PathUtils;
 import com.almgru.expm.system.ProfileLauncher;
 import com.almgru.expm.view.MainWindow;
@@ -21,7 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        PathUtils pathUtils = new PathUtils();
+        PathUtils pathUtils = new PathUtils(new OSDetector());
 
         try {
             Collection<Profile> profiles = this.loadProfiles(pathUtils);
