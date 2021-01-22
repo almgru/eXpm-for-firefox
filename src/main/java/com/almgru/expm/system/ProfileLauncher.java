@@ -10,11 +10,11 @@ import java.nio.file.Paths;
  * Responsible for launching Firefox with a specified profile applied.
  */
 public class ProfileLauncher {
-    private final File firefoxInstallPath;
+    private final FirefoxLauncher firefoxLauncher;
     private final File profilesPath;
 
-    public ProfileLauncher(File firefoxInstallPath, File profilesPath) {
-        this.firefoxInstallPath = firefoxInstallPath;
+    public ProfileLauncher(FirefoxLauncher firefoxLauncher, File profilesPath) {
+        this.firefoxLauncher = firefoxLauncher;
         this.profilesPath = profilesPath;
     }
 
@@ -25,12 +25,10 @@ public class ProfileLauncher {
      */
     public void launchProfile(Profile profile) {
         try {
-            // TODO: Handle non-relative profiles
-            Runtime.getRuntime().exec(new String[]{
-                    this.firefoxInstallPath.getPath(),
+            firefoxLauncher.launchFirefox(
                     "-profile",
                     Paths.get(this.profilesPath.getPath(), profile.path).toString()
-            });
+            );
         } catch (IOException ignored) {
         }
     }
