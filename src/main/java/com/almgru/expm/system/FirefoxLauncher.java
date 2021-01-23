@@ -4,14 +4,16 @@ import java.io.File;
 import java.io.IOException;
 
 class FirefoxLauncher {
+    private final ProcessLauncher processLauncher;
     private final File firefoxInstallPath;
 
-    FirefoxLauncher(File firefoxInstallPath) {
+    FirefoxLauncher(ProcessLauncher processLauncher, File firefoxInstallPath) {
+        this.processLauncher = processLauncher;
         this.firefoxInstallPath = firefoxInstallPath;
     }
 
     void launchFirefox(String ...arguments) throws IOException {
-        Runtime.getRuntime().exec(addFirefoxExePathAtStartOfArgArray(arguments));
+        processLauncher.launchProcess(addFirefoxExePathAtStartOfArgArray(arguments));
     }
 
     private String[] addFirefoxExePathAtStartOfArgArray(String[] argArray) {
