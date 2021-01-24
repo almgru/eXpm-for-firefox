@@ -6,8 +6,10 @@ import com.almgru.expm.exceptions.FirefoxNotInstalledException;
 import com.almgru.expm.exceptions.LoadProfilesException;
 import com.almgru.expm.exceptions.UnsupportedOSException;
 import com.almgru.expm.model.Profile;
+import com.almgru.expm.system.FirefoxLauncher;
 import com.almgru.expm.system.OSDetector;
 import com.almgru.expm.system.PathUtils;
+import com.almgru.expm.system.ProcessLauncher;
 import com.almgru.expm.system.ProfileLauncher;
 import com.almgru.expm.view.MainWindow;
 import javafx.application.Application;
@@ -68,7 +70,11 @@ public class Main extends Application {
      */
     private ProfileLauncher initProfileLauncher(PathUtils pathUtils) throws
             UnsupportedOSException, FirefoxNotInstalledException {
-        return new ProfileLauncher(pathUtils.getFirefoxInstallPath(), pathUtils.getProfilesPath());
+        return new ProfileLauncher(
+                new FirefoxLauncher(new ProcessLauncher(),
+                        pathUtils.getFirefoxInstallPath()),
+                pathUtils.getProfilesPath()
+        );
     }
 
     /**
