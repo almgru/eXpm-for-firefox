@@ -20,10 +20,7 @@ public class FirefoxLauncher {
     private String[] addFirefoxExePathAtStartOfArgArray(String[] argArray) {
         String[] firefoxArgs = new String[argArray.length + 1];
         firefoxArgs[0] = this.firefoxInstallPath.getPath();
-
-        for (int i = 0; i < argArray.length; i++) {
-            firefoxArgs[i + 1] = argArray[i];
-        }
+        System.arraycopy(argArray, 0, firefoxArgs, 1, argArray.length);
 
         return firefoxArgs;
     }
