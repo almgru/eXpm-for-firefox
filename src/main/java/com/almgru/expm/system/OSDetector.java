@@ -2,6 +2,9 @@ package com.almgru.expm.system;
 
 import com.almgru.expm.enums.OperatingSystem;
 
+/**
+ * Detects the operating system the program instance runs on.
+ */
 public class OSDetector {
     public OperatingSystem getOS() {
         String osString = System.getProperty("os.name").toLowerCase();
