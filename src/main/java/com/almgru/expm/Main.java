@@ -2,15 +2,12 @@ package com.almgru.expm;
 
 import com.almgru.expm.controller.MainWindowController;
 import com.almgru.expm.data_access.ProfileReader;
+import com.almgru.expm.enums.OperatingSystem;
 import com.almgru.expm.exceptions.FirefoxNotInstalledException;
 import com.almgru.expm.exceptions.LoadProfilesException;
 import com.almgru.expm.exceptions.UnsupportedOSException;
 import com.almgru.expm.model.Profile;
-import com.almgru.expm.system.FirefoxLauncher;
-import com.almgru.expm.system.OSDetector;
-import com.almgru.expm.system.PathUtils;
-import com.almgru.expm.system.ProcessLauncher;
-import com.almgru.expm.system.ProfileLauncher;
+import com.almgru.expm.system.*;
 import com.almgru.expm.view.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +21,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        PathUtils pathUtils = new PathUtils(new OSDetector());
+        OSDetector osDetector = new OSDetector();
+        PathUtils pathUtils;
+
+        if (osDetector.getOS() == OperatingSystem.Windows) {
+            pathUtils = new PathUtils(osDetector, new WindowsRegistryIO());
+        } else {
+            pathUtils = new PathUtils(osDetector);
+        }
 
         try {
             Collection<Profile> profiles = this.loadProfiles(pathUtils);
